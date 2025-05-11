@@ -48,31 +48,30 @@
     <audio id="audioPlayer" controls></audio>
   </div>
   <script>
-    const tracks = [
-      {
-        title: "Shrimad Bhagwat Katha - Day 1",
-        url: "https://archive.org/download/ShrimadBhagwatKathaByShriRajendraDasJiMaharajMuzaffarpurDay02/Shrimad%20Bhagwat%20Katha%20by%20Shri%20Rajendra%20Das%20Ji%20Maharaj%20%28Muzaffarpur%29%20Day%2001.mp3"
-      },
-      {
-        title: "Bhaktmal Katha - Day 1",
-        url: "https://archive.org/download/HindiPravachan--ShriBhaktmalKathaByShriRajendraDasJi-From4thNov2015Mp3_201512/LIVE%20-%20Shri%20Bhaktmal%20Katha%20by%20Shri%20Rajendra%20Das%20Ji%20-%204th%20Nov%202015%20__%20Day%201.mp3"
-      }
-    ];
+    // Fetch MP3 links using the Internet Archive's API
+    async function fetchTracks() {
+      const response = await fetch("https://archive.org/advancedsearch.php?q=subject%3A%22Shri+Rajendra+Das+Ji+Maharaj%22&fl[]=identifier&output=json");
+      const data = await response.json();
+      const tracks = data.response.docs;
+      const list = document.getElementById('trackList');
+      const audio = document.getElementById('audioPlayer');
 
-    const list = document.getElementById('trackList');
-    const audio = document.getElementById('audioPlayer');
+      tracks.forEach(track => {
+        const mp3Url = `https://archive.org/download/${track.identifier}/${track.identifier}.mp3`;
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.textContent = track.identifier;
+        btn.onclick = () => {
+          audio.src = mp3Url;
+          audio.play();
+        };
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+    }
 
-    tracks.forEach(track => {
-      const li = document.createElement('li');
-      const btn = document.createElement('button');
-      btn.textContent = track.title;
-      btn.onclick = () => {
-        audio.src = track.url;
-        audio.play();
-      };
-      li.appendChild(btn);
-      list.appendChild(li);
-    });
+    // Fetch and display tracks when the page loads
+    window.onload = fetchTracks;
   </script>
 </body>
 </html>
