@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shri Rajendra Das Ji Maharaj MP3 Player</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f3f4f6;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .player {
+      max-width: 600px;
+      margin: auto;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 0.5rem 0;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+    }
+    audio {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="player">
+    <h1>Shri Rajendra Das Ji Maharaj MP3 Player</h1>
+    <ul id="trackList"></ul>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+  <script>
+    const tracks = [
+      {
+        title: "Shrimad Bhagwat Katha - Day 1",
+        url: "https://archive.org/download/ShrimadBhagwatKathaByShriRajendraDasJiMaharajMuzaffarpurDay02/Shrimad%20Bhagwat%20Katha%20by%20Shri%20Rajendra%20Das%20Ji%20Maharaj%20%28Muzaffarpur%29%20Day%2001.mp3"
+      },
+      {
+        title: "Bhaktmal Katha - Day 1",
+        url: "https://archive.org/download/HindiPravachan--ShriBhaktmalKathaByShriRajendraDasJi-From4thNov2015Mp3_201512/LIVE%20-%20Shri%20Bhaktmal%20Katha%20by%20Shri%20Rajendra%20Das%20Ji%20-%204th%20Nov%202015%20__%20Day%201.mp3"
+      }
+    ];
+
+    const list = document.getElementById('trackList');
+    const audio = document.getElementById('audioPlayer');
+
+    tracks.forEach(track => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.textContent = track.title;
+      btn.onclick = () => {
+        audio.src = track.url;
+        audio.play();
+      };
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
